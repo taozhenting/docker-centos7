@@ -9,3 +9,6 @@ ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN echo 'root:logic123' | chpasswd
 RUN systemctl enable sshd
+RUN yum install -y nginx
+COPY ./nginx.conf /etc/nginx/
+RUN systemctl enable nginx
