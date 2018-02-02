@@ -9,3 +9,7 @@ ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN echo 'root:logic123' | chpasswd
 RUN systemctl enable sshd
+RUN yum install -y mysql-community-server mysql-community-client
+RUN mv /etc/my.cnf /etc/my.cnf.bak
+COPY ./my.cnf /etc/
+RUN systemctl enable mysqld
