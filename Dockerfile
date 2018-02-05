@@ -1,4 +1,4 @@
-FROM centos7-ssh:0.5
+FROM centos:latest
 MAINTAINER tom.tao tom.tao@logicsolutions.com.cn
 COPY ./mysql57-community-release-el7-11.noarch.rpm /usr/local/src/
 COPY ./epel-release-latest-7.noarch.rpm /usr/local/src/
