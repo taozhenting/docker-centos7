@@ -9,3 +9,59 @@ ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN echo 'root:logic123' | chpasswd
 RUN systemctl enable sshd
+COPY ./php-5.6.33.tar.gz /usr/local/src/
+RUN yum install -y nginx gcc make apr-devel apr-util-devel pcre-devel libxml2-devel curl-devel gd-devel openssl-devel autoconf libjpeg-devel libpng-devel libxslt-devel
+WORKDIR /usr/local/src/
+RUN tar zxvf php-5.6.33.tar.gz
+WORKDIR php-5.6.33
+RUN ./configure \
+--prefix=/opt/php5.6.33 \
+--with-curl \
+--with-freetype-dir \
+--with-gd \
+--with-gettext \
+--with-iconv-dir \
+--with-kerberos \
+--with-libdir=lib64 \
+--with-libxml-dir \
+--with-mysqli \
+--with-openssl \
+--with-pcre-regex \
+--with-pdo-mysql \
+--with-pdo-sqlite \
+--with-pear \
+--with-png-dir \
+--with-xmlrpc \
+--with-xsl \
+--with-zlib \
+--enable-fpm \
+--enable-bcmath \
+--enable-libxml \
+--enable-inline-optimization \
+--enable-gd-native-ttf \
+--enable-mbregex \
+--enable-mbstring \
+--enable-opcache \
+--enable-pcntl \
+--enable-shmop \
+--enable-soap \
+--enable-sockets \
+--enable-sysvsem \
+--enable-xml \
+--enable-zip \
+--with-jpeg-dir
+RUN make && make install
+COPY ./php.ini /opt/php5.6.33/lib/php.ini
+COPY ./php-fpm.conf /opt/php5.6.33/etc/php-fpm.conf
+COPY ./www.conf /opt/php5.6.33/etc/php-fpm.d/
+RUN mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
+COPY ./nginx.conf /etc/nginx/
+COPY ./test.php /usr/share/nginx/html/
+RUN cp /usr/local/src/php-5.6.33/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
+RUN chmod +x /etc/init.d/php-fpm
+RUN chkconfig --add php-fpm
+RUN chkconfig php-fpm on
+RUN systemctl enable nginx
+RUN /etc/init.d/php-fpm start
+ENV PATH /opt/php5.6.33/bin:$PATH
+RUN echo $PATH
