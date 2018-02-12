@@ -53,7 +53,6 @@ RUN ./configure \
 RUN make && make install
 COPY ./php.ini /opt/php5.6.33/lib/php.ini
 COPY ./php-fpm.conf /opt/php5.6.33/etc/php-fpm.conf
-COPY ./www.conf /opt/php5.6.33/etc/php-fpm.d/
 RUN mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
 COPY ./nginx.conf /etc/nginx/
 COPY ./test.php /usr/share/nginx/html/
