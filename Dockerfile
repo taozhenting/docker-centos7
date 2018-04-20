@@ -7,5 +7,5 @@ RUN rpm -ivh /usr/local/src/mysql57-community-release-el7-11.noarch.rpm
 RUN yum install -y openssh-server openssh-clients net-tools traceroute telnet sudo mysql-community-client
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN echo 'root:logic123' | chpasswd
+RUN echo 'root:tom123' | chpasswd
 RUN systemctl enable sshd
