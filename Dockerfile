@@ -7,7 +7,7 @@ RUN rpm -ivh /usr/local/src/mysql57-community-release-el7-11.noarch.rpm
 RUN yum install -y openssh-server openssh-clients net-tools traceroute telnet sudo mysql-community-client
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN echo 'root:logic123' | chpasswd
+RUN echo 'root:tom123' | chpasswd
 RUN systemctl enable sshd
 COPY ./php-7.0.27.tar.gz /usr/local/src/
 RUN yum install -y nginx gcc make apr-devel apr-util-devel pcre-devel libxml2-devel curl-devel gd-devel openssl-devel autoconf libjpeg-devel libpng-devel libxslt-devel
