@@ -10,9 +10,9 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN echo 'root:tom123' | chpasswd
 RUN systemctl enable sshd
 RUN yum install -y httpd httpd-devel
-COPY ./php-5.6.33.tar.gz /usr/local/src/
-RUN yum install -y gcc make apr-devel apr-util-devel pcre-devel libxml2-devel curl-devel gd-devel openssl-devel autoconf libjpeg-devel libpng-devel libxslt-devel
+RUN yum install -y wget gcc make apr-devel apr-util-devel pcre-devel libxml2-devel curl-devel gd-devel openssl-devel autoconf libjpeg-devel libpng-devel libxslt-devel
 WORKDIR /usr/local/src/
+RUN wget http://cn2.php.net/distributions/php-5.6.33.tar.gz
 RUN tar zxvf php-5.6.33.tar.gz
 WORKDIR php-5.6.33
 RUN ./configure \
